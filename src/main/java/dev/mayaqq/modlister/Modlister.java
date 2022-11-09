@@ -22,7 +22,7 @@ public class Modlister {
             }
         }
 
-        System.out.println("Listing of Mods Complete!");
+        Gui.cLog("Listing of Mods Complete!");
         if (temp.exists()) {
             temp.delete();
         }
