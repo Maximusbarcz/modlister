@@ -15,14 +15,14 @@ public class Modlister {
         }
         modNames = f.list();
         for (String modName : modNames) {
-            System.out.println(modName);
+            Gui.cLog("Listing: " + modName, false);
             jarPath = filePath + "/" + modName;
             if (modName.contains(".jar") && !modName.contains(".disabled")) {
                 ListModJson.ListJar(jarPath, filePath);
             }
         }
 
-        Gui.cLog("Listing of Mods Complete!");
+        Gui.cLog("Listing of Mods Complete!", false);
         if (temp.exists()) {
             temp.delete();
         }

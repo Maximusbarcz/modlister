@@ -1,6 +1,8 @@
 package dev.mayaqq.modlister;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +38,7 @@ class Gui extends JFrame implements ActionListener {
         github = new JButton("Github");
         openFolder = new JButton("Open Mods Folder \uD83D\uDCC2");
         log = new JTextArea();
-        scrollPane = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane = new JScrollPane(log);
 
         Gui gui = new Gui();
         JPanel panel = new JPanel();
@@ -114,15 +116,17 @@ class Gui extends JFrame implements ActionListener {
         log.setPreferredSize(new Dimension(800, 243));
         log.setFont(new Font("Arial", Font.PLAIN, 20));
         log.setCaretColor(White);
-        log.setEditable(false);
+        log.setEditable(true);
+        // frame.getContentPane().add(scrollPane);
 
         //scroll pane ui
         scrollPane.setBackground(CurrentLine);
-        scrollPane.setForeground(Purple);
-        scrollPane.setBorder(BorderFactory.createBevelBorder( 2, White, White));
+        scrollPane.setBorder(BorderFactory.createBevelBorder( 2, Purple, Purple));
         scrollPane.setPreferredSize(new Dimension(20, 243));
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.createVerticalScrollBar();
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
 
         //register all the elements to the panel and also configure it
         frame.setSize(854, 480);
@@ -141,15 +145,13 @@ class Gui extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
-    //This method is called when the submit button is clicked and the Path is not valid
-    public static void NotValidPathError() {
-        cLog("Error! Invalid Path Entered");
-        status.setText("Error! Please enter a valid path!");
-        status.setForeground(Color.RED);
-    }
     //log
-    public static void cLog(String text) {
-        log.append(text + "\n");
+    public static void cLog(String text, boolean Error) {
+        if (Error) {
+            log.append("Error: " + text + "\n");
+        } else {
+            log.append(text + "\n");
+        }
     }
 
     //makes sure the buttons actually do something
@@ -159,7 +161,7 @@ class Gui extends JFrame implements ActionListener {
             case "submit":
                 String text = textField.getText();
                 if (!text.endsWith("mods")) {
-                    NotValidPathError();
+                    cLog("Invalid Path Entered", true);
                 } else {
                     status.setText(text);
                     try {
@@ -174,7 +176,7 @@ class Gui extends JFrame implements ActionListener {
                 break;
             case "Discord":
                 try {
-                    cLog("Opening Discord Invite Link...");
+                    cLog("Opening Discord Invite Link...", false);
                     Desktop.getDesktop().browse(new URI("https://discord.gg/w7PpGax9Bq"));
                 } catch (IOException | URISyntaxException ex) {
                     throw new RuntimeException(ex);
@@ -182,7 +184,7 @@ class Gui extends JFrame implements ActionListener {
                 break;
             case "Github":
                 try {
-                    cLog("Opening Github Link...");
+                    cLog("Opening Github Link...", false);
                     Desktop.getDesktop().browse(new URI("https://github.com/Maximusbarcz/modlister"));
                 } catch (IOException | URISyntaxException ex) {
                     throw new RuntimeException(ex);
@@ -191,10 +193,10 @@ class Gui extends JFrame implements ActionListener {
             case "Open Mods Folder \uD83D\uDCC2":
                 try {
                     if (textField.getText().endsWith("mods")) {
-                        cLog("Opening Mods Folder...");
+                        cLog("Opening Mods Folder...", false);
                         Desktop.getDesktop().open(new File(textField.getText()));
                     } else {
-                        NotValidPathError();
+                        cLog("Invalid Path Entered", true);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
