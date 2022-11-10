@@ -23,6 +23,7 @@ public class Modlister {
         }
 
         Gui.cLog("Listing of Mods Complete!", false);
+        Gui.cLog("Modlist.txt has been created in the same directory as the mods folder.", false);
         if (temp.exists()) {
             temp.delete();
         }

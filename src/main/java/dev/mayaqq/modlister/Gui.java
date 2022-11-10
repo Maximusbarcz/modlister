@@ -1,8 +1,7 @@
 package dev.mayaqq.modlister;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.text.DefaultCaret;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,15 +12,8 @@ import java.net.URISyntaxException;
 
 class Gui extends JFrame implements ActionListener {
     static JTextField textField;
-    static JFrame frame;
-    static JButton submit;
     static JLabel status;
-    static JLabel info;
-    static JButton discord;
-    static JButton github;
-    static JButton openFolder;
     static JTextArea log;
-    static JScrollPane scrollPane;
 
     //All the colors used in the GUI
     static Color Background = new Color(40, 42, 54);
@@ -31,17 +23,25 @@ class Gui extends JFrame implements ActionListener {
 
     public static void CreateGui() {
 
-        frame = new JFrame("Mod Lister");
-        status = new JLabel("Enter a Mods Folder Path!");
-        submit = new JButton("submit");
-        discord = new JButton("Discord");
-        github = new JButton("Github");
-        openFolder = new JButton("Open Mods Folder \uD83D\uDCC2");
+        JFrame frame = new JFrame("Mod Lister");
+        JPanel submitRow = new JPanel();
+        JPanel buttonRow = new JPanel();
+        JPanel infoRow = new JPanel();
+        JPanel statusRow = new JPanel();
+        JButton submit = new JButton("submit");
+        JButton discord = new JButton("Discord");
+        JButton github = new JButton("Github");
+        JButton openFolder = new JButton("Open Mods Folder");
+        JLabel info = new JLabel("Copy the path of a mods folder and paste it into the text field. Then click submit.");
+
+        //Elements used in other code
         log = new JTextArea();
-        scrollPane = new JScrollPane(log);
+        textField = new JTextField(16);
+        status = new JLabel("Enter a Mods Folder Path!");
+
+        JScrollPane scrollPane = new JScrollPane(log);
 
         Gui gui = new Gui();
-        JPanel panel = new JPanel();
 
         // addActionListener to buttons
         submit.addActionListener(gui);
@@ -49,17 +49,16 @@ class Gui extends JFrame implements ActionListener {
         github.addActionListener(gui);
         openFolder.addActionListener(gui);
 
-        // create an object of JTextField with 16 columns
-        textField = new JTextField(16);
-        info = new JLabel("Copy the path of a mods folder and paste it into the text field. Then click submit.");
-
         //Sets the close operation to exit on close
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //properties of info label
         info.setForeground(White);
         info.setFont(new Font("Arial", Font.BOLD, 15));
-        info.setHorizontalAlignment(SwingConstants.CENTER);
+
+        infoRow.setBackground(Background);
+        infoRow.setLayout(new FlowLayout());
+        infoRow.add(info);
 
         //properties of status label
         status.setForeground(Purple);
@@ -67,12 +66,9 @@ class Gui extends JFrame implements ActionListener {
         status.setFont(new Font("Arial", Font.BOLD, 20));
         status.setHorizontalAlignment(SwingConstants.CENTER);
 
-        //properties of submit button
-        submit.setBackground(CurrentLine);
-        submit.setForeground(White);
-        submit.setBorder(BorderFactory.createBevelBorder( 2, White, White));
-        submit.setPreferredSize(new Dimension(100, 50));
-        submit.setFont(new Font("Arial", Font.BOLD, 20));
+        statusRow.setBackground(Background);
+        statusRow.setLayout(new FlowLayout());
+        statusRow.add(status);
 
         //properties of the input field
         textField.setBackground(CurrentLine);
@@ -82,15 +78,25 @@ class Gui extends JFrame implements ActionListener {
         textField.setFont(new Font("Arial", Font.PLAIN, 20));
         textField.setCaretColor(White);
 
+        //properties of submit button
+        submit.setBackground(CurrentLine);
+        submit.setForeground(White);
+        submit.setBorder(BorderFactory.createBevelBorder( 2, White, White));
+        submit.setPreferredSize(new Dimension(100, 50));
+        submit.setFont(new Font("Arial", Font.BOLD, 20));
+
+        submitRow.setBackground(Background);
+        submitRow.setLayout(new FlowLayout());
+        submitRow.add(textField);
+        submitRow.add(submit);
+
         //properties of the discord button
         discord.setBackground(CurrentLine);
         discord.setForeground(White);
         discord.setBorder(BorderFactory.createBevelBorder( 2, White, White));
         discord.setPreferredSize(new Dimension(100, 50));
         discord.setFont(new Font("Arial", Font.BOLD, 20));
-
-
-        discord.setHorizontalAlignment(SwingConstants.CENTER);
+        discord.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //properties of the github button
         github.setBackground(CurrentLine);
@@ -98,54 +104,54 @@ class Gui extends JFrame implements ActionListener {
         github.setBorder(BorderFactory.createBevelBorder( 2, White, White));
         github.setPreferredSize(new Dimension(100, 50));
         github.setFont(new Font("Arial", Font.BOLD, 20));
-        github.setHorizontalAlignment(SwingConstants.CENTER);
+        github.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //properties of the open folder button
-
         openFolder.setBackground(CurrentLine);
         openFolder.setForeground(White);
         openFolder.setBorder(BorderFactory.createBevelBorder( 2, White, White));
-        openFolder.setPreferredSize(new Dimension(250, 50));
+        openFolder.setPreferredSize(new Dimension(220, 50));
         openFolder.setFont(new Font("Arial", Font.BOLD, 20));
-        openFolder.setHorizontalAlignment(SwingConstants.CENTER);
+        openFolder.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        buttonRow.setBackground(Background);
+        buttonRow.setLayout(new FlowLayout());
+        buttonRow.add(discord);
+        buttonRow.add(github);
+        buttonRow.add(openFolder);
 
         //log ui
         log.setBackground(CurrentLine);
         log.setForeground(White);
-        log.setBorder(BorderFactory.createBevelBorder( 2, White, White));
-        log.setPreferredSize(new Dimension(800, 243));
+        log.setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder( 2, Background, Background), "Log", TitledBorder.CENTER, TitledBorder.TOP, new Font("Arial", Font.BOLD, 20), White));
         log.setFont(new Font("Arial", Font.PLAIN, 20));
         log.setCaretColor(White);
-        log.setEditable(true);
-        // frame.getContentPane().add(scrollPane);
+        log.setEditable(false);
 
         //scroll pane ui
         scrollPane.setBackground(CurrentLine);
-        scrollPane.setBorder(BorderFactory.createBevelBorder( 2, Purple, Purple));
-        scrollPane.setPreferredSize(new Dimension(20, 243));
+        scrollPane.setBorder(BorderFactory.createBevelBorder(2, Purple, Purple));
+        scrollPane.setPreferredSize(new Dimension(20, frame.getHeight() + 243));
         scrollPane.createVerticalScrollBar();
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setBackground(Background);
 
 
         //register all the elements to the panel and also configure it
         frame.setSize(854, 480);
-        panel.setBackground(Background);
-        panel.add(info);
-        panel.add(textField);
-        panel.add(submit);
-        panel.add(status);
-        panel.add(discord);
-        panel.add(github);
-        panel.add(openFolder);
-        panel.add(log);
-        panel.add(scrollPane);
-        frame.add(panel);
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        frame.getContentPane().setBackground(Background);
 
+        frame.add(infoRow);
+        frame.add(submitRow);
+        frame.add(statusRow);
+        frame.add(buttonRow);
+        frame.add(scrollPane);
         frame.setVisible(true);
     }
 
-    //log
+    //log util
     public static void cLog(String text, boolean Error) {
         if (Error) {
             log.append("Error: " + text + "\n");
@@ -162,7 +168,10 @@ class Gui extends JFrame implements ActionListener {
                 String text = textField.getText();
                 if (!text.endsWith("mods")) {
                     cLog("Invalid Path Entered", true);
+                    status.setForeground(Color.RED);
+                    status.setText("Invalid Path Entered");
                 } else {
+                    status.setForeground(Purple);
                     status.setText(text);
                     try {
                         Modlister.getMods(text);
@@ -190,13 +199,15 @@ class Gui extends JFrame implements ActionListener {
                     throw new RuntimeException(ex);
                 }
                 break;
-            case "Open Mods Folder \uD83D\uDCC2":
+            case "Open Mods Folder":
                 try {
                     if (textField.getText().endsWith("mods")) {
                         cLog("Opening Mods Folder...", false);
                         Desktop.getDesktop().open(new File(textField.getText()));
                     } else {
                         cLog("Invalid Path Entered", true);
+                        status.setForeground(Color.RED);
+                        status.setText("Invalid Path Entered");
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
