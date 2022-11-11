@@ -9,8 +9,10 @@ import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import static dev.mayaqq.modlister.Gui.cLog;
+
 public class ListModJson {
-    public static void ListJar(String jarPath, String filePath) throws IOException {
+    public static void ListJar(String jarPath, String modListPath) throws IOException {
         JarFile modJar = new JarFile(jarPath);
         final Enumeration<JarEntry> entries = modJar.entries();
         while (entries.hasMoreElements()) {
@@ -29,12 +31,12 @@ public class ListModJson {
                     }
                     writer.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    cLog(e.toString(), 1);
                 }
 
                 Gson gson = new Gson();
                 Map map = gson.fromJson(new FileReader(temp), Map.class);
-                File modList = new File(filePath + "/modlist.txt");
+                File modList = new File(modListPath);
                 if (!modList.exists()) {
                     modList.createNewFile();
                 }

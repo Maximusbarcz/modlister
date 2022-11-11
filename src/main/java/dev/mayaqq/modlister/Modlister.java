@@ -2,6 +2,9 @@ package dev.mayaqq.modlister;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+
+import static dev.mayaqq.modlister.Gui.cLog;
 
 public class Modlister {
     public static void getMods(String filePath) throws IOException {
@@ -9,23 +12,26 @@ public class Modlister {
         File f = new File(filePath);
         File temp = new File("temp.json");
         String[] modNames;
-        File modlist = new File(filePath + "/modlist.txt");
-        if (modlist.exists()) {
-            modlist.delete();
-        }
         modNames = f.list();
-        for (String modName : modNames) {
-            Gui.cLog("Listing: " + modName, false);
-            jarPath = filePath + "/" + modName;
-            if (modName.contains(".jar") && !modName.contains(".disabled")) {
-                ListModJson.ListJar(jarPath, filePath);
-            }
-        }
 
-        Gui.cLog("Listing of Mods Complete!", false);
-        Gui.cLog("Modlist.txt has been created in the same directory as the mods folder.", false);
-        if (temp.exists()) {
-            temp.delete();
+        try {
+            File modListFile = new File(SaveGui.SaveGui());
+            Path modListPath = modListFile.toPath();
+            for (String modName : modNames) {
+                cLog("Listing: " + modName, 0);
+                jarPath = filePath + "/" + modName;
+                if (modName.contains(".jar") && !modName.contains(".disabled")) {
+                    ListModJson.ListJar(jarPath, modListPath.toString());
+                }
+            }
+
+            cLog("Listing of Mods Complete!", 0);
+            cLog("Modlist.txt has been created to " + modListPath, 0);
+            if (temp.exists()) {
+                temp.delete();
+            }
+        } catch (Exception e) {
+            cLog(e.toString(), 1);
         }
     }
 }
