@@ -38,9 +38,6 @@ public class ListModJson {
                 Gson gson = new Gson();
                 Map map = gson.fromJson(new FileReader(temp), Map.class);
                 File modList = new File(modListPath);
-                if (!modList.exists()) {
-                    modList.createNewFile();
-                }
                 FileWriter writer = new FileWriter(modList, true);
                 String sources = null;
                 Object contact = map.get("contact");

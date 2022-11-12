@@ -16,6 +16,7 @@ class Gui extends JFrame implements ActionListener {
     static JLabel status;
     static JTextArea log;
     static JScrollPane scrollPane;
+    static JFileChooser chooser;
 
     //All the colors used in the GUI
     static Color Background = new Color(40, 42, 54);
@@ -32,9 +33,8 @@ class Gui extends JFrame implements ActionListener {
         JPanel infoRow = new JPanel();
         JPanel statusRow = new JPanel();
         JPanel logRow = new JPanel();
-        JFileChooser fileChooser = new JFileChooser();
         JButton chooseFolder = new JButton("\uD83D\uDCC1");
-        JButton submit = new JButton("submit");
+        JButton submit = new JButton("Submit");
         JButton discord = new JButton("Discord");
         JButton github = new JButton("Github");
         JButton openFolder = new JButton("Open Mods Folder");
@@ -45,6 +45,7 @@ class Gui extends JFrame implements ActionListener {
         textField = new JTextField(16);
         status = new JLabel("Enter a Mods Folder Path!");
         scrollPane = new JScrollPane(log);
+        chooser = new JFileChooser();
 
         //Some misc stuff that is required for the GUI to work and to also look pretty but does not fit in any category I already made
         UIManager.put("Button.select", Purple);
@@ -78,14 +79,6 @@ class Gui extends JFrame implements ActionListener {
         chooseFolder.setPreferredSize(new Dimension(50, 50));
         chooseFolder.setFont(new Font("Arial", Font.BOLD, 20));
         chooseFolder.setFocusPainted(false);
-
-        //properties file chooser
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        fileChooser.setDialogTitle("Choose a Mods Folder");
-        fileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooser.setBackground(Background);
-        fileChooser.setForeground(White);
-        fileChooser.setFont(new Font("Arial", Font.PLAIN, 20));
 
         //properties of submit button
         submit.addActionListener(gui);
@@ -160,6 +153,11 @@ class Gui extends JFrame implements ActionListener {
             }
         });
 
+        //configre the file Chooser
+        chooser.setDialogTitle("Choose Mods Folder");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
         //Register Rows
         infoRow.setBackground(Background);
         infoRow.setLayout(new FlowLayout());
@@ -220,7 +218,7 @@ class Gui extends JFrame implements ActionListener {
         String s = event.getActionCommand();
         String text = textField.getText();
         switch (s) {
-            case "submit":
+            case "Submit":
                 if (!text.endsWith("mods")) {
                     if (text.equals("")) {
                         cLog("Invalid Path Entered - null", 1);
@@ -279,11 +277,7 @@ class Gui extends JFrame implements ActionListener {
                 }
                 break;
             case "\uD83D\uDCC1":
-                JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new java.io.File(textField.getText()));
-                chooser.setDialogTitle("Choose Mods Folder");
-                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                chooser.setAcceptAllFileFilterUsed(false);
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     textField.setText(chooser.getSelectedFile().toString());
                 } else {

@@ -19,6 +19,13 @@ public class Modlister {
         try {
             File modListFile = new File(SaveGui.SaveGui());
             Path modListPath = modListFile.toPath();
+            if (modListFile.exists()) {
+                modListFile.delete();
+                modListFile.createNewFile();
+            } else {
+                modListFile.createNewFile();
+            }
+            cLog("Listing: " + filePath, 0);
             cLog("[", 2);
             for (String modName : modNames) {
                 jarPath = filePath + "/" + modName;
