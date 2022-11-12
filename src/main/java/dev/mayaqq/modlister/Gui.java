@@ -129,7 +129,7 @@ class Gui extends JFrame implements ActionListener {
         //log ui
         log.setBackground(CurrentLine);
         log.setForeground(White);
-        log.setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder( 2, Background, Background), "Log", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, new Font("Arial", Font.BOLD, 20), White));
+        log.setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder( 2, Background, Background), "Log", TitledBorder.LEFT, TitledBorder.LEFT, new Font("Arial", Font.BOLD, 20), Purple));
         log.setFont(new Font("Arial", Font.PLAIN, 20));
         log.setCaretColor(White);
         log.setEditable(false);
@@ -145,7 +145,7 @@ class Gui extends JFrame implements ActionListener {
         scrollPane.setAutoscrolls(true);
         horizontal.setPreferredSize(new Dimension(0, 10));
         horizontal.setBackground(CurrentLine);
-        vertical.setPreferredSize(new Dimension(10, 0));
+        vertical.setSize(new Dimension(10, 0));
         vertical.setBackground(CurrentLine);
         vertical.setUI(new BasicScrollBarUI() {
             protected void configureScrollBarColors() {
@@ -208,6 +208,8 @@ class Gui extends JFrame implements ActionListener {
             case 1 ->
                 //Default Error output
                     log.append("Error: " + text + "\n");
+            case 2 ->
+                log.append(text);
         }
         //auto scrolls to the bottom of the log
         scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
@@ -244,6 +246,7 @@ class Gui extends JFrame implements ActionListener {
                     cLog("Opening Discord Invite Link...", 0);
                     Desktop.getDesktop().browse(new URI("https://discord.gg/w7PpGax9Bq"));
                 } catch (IOException | URISyntaxException ex) {
+                    cLog(ex.toString(), 1);
                     throw new RuntimeException(ex);
                 }
                 break;
@@ -252,6 +255,7 @@ class Gui extends JFrame implements ActionListener {
                     cLog("Opening Github Link...", 0);
                     Desktop.getDesktop().browse(new URI("https://github.com/Maximusbarcz/modlister"));
                 } catch (IOException | URISyntaxException ex) {
+                    cLog(ex.toString(), 1);
                     throw new RuntimeException(ex);
                 }
                 break;
@@ -270,6 +274,7 @@ class Gui extends JFrame implements ActionListener {
                         status.setText("Invalid Path Entered");
                     }
                 } catch (IOException ex) {
+                    cLog(ex.toString(), 1);
                     throw new RuntimeException(ex);
                 }
                 break;
@@ -282,7 +287,7 @@ class Gui extends JFrame implements ActionListener {
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     textField.setText(chooser.getSelectedFile().toString());
                 } else {
-                    cLog("No Selection", 1);
+                    cLog("No Selection made", 1);
                 }
                 break;
         }

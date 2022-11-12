@@ -13,6 +13,7 @@ import static dev.mayaqq.modlister.Gui.cLog;
 
 public class ListModJson {
     public static void ListJar(String jarPath, String modListPath) throws IOException {
+        //someone please make this prettier
         JarFile modJar = new JarFile(jarPath);
         final Enumeration<JarEntry> entries = modJar.entries();
         while (entries.hasMoreElements()) {

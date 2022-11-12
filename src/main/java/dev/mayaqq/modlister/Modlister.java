@@ -1,5 +1,6 @@
 package dev.mayaqq.modlister;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,25 +14,34 @@ public class Modlister {
         File temp = new File("temp.json");
         String[] modNames;
         modNames = f.list();
+        Integer modCount = 0;
 
         try {
             File modListFile = new File(SaveGui.SaveGui());
             Path modListPath = modListFile.toPath();
+            cLog("[", 2);
             for (String modName : modNames) {
-                cLog("Listing: " + modName, 0);
                 jarPath = filePath + "/" + modName;
                 if (modName.contains(".jar") && !modName.contains(".disabled")) {
+                    cLog("|", 2);
+                    modCount++;
                     ListModJson.ListJar(jarPath, modListPath.toString());
                 }
             }
-
+            cLog("] [" + modCount + "]\n", 2);
             cLog("Listing of Mods Complete!", 0);
             cLog("Modlist.txt has been created to " + modListPath, 0);
             if (temp.exists()) {
                 temp.delete();
             }
+            try {
+                cLog("Opening: " + modListPath.toString().replaceAll(".*[/\\\\]", ""), 0);
+                Desktop.getDesktop().open(modListFile);
+            } catch (IOException e) {
+                cLog("Error opening the file, you can open it manually in your directory.", 1);
+            }
         } catch (Exception e) {
-            cLog(e.toString(), 1);
+            cLog("Process aborted: " + e, 1);
         }
     }
 }
