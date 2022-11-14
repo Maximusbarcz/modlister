@@ -138,7 +138,7 @@ class Gui extends JFrame implements ActionListener {
         scrollPane.setAutoscrolls(true);
         horizontal.setPreferredSize(new Dimension(0, 10));
         horizontal.setBackground(CurrentLine);
-        vertical.setSize(new Dimension(10, 0));
+        vertical.setPreferredSize(new Dimension(10, 0));
         vertical.setBackground(CurrentLine);
         vertical.setUI(new BasicScrollBarUI() {
             protected void configureScrollBarColors() {
@@ -198,16 +198,11 @@ class Gui extends JFrame implements ActionListener {
     }
 
     //log util
-    public static void cLog(String text, Integer ErrorType) {
-        switch (ErrorType) {
-            case 0 ->
-                //Normal output
-                    log.append(text + "\n");
-            case 1 ->
-                //Default Error output
-                    log.append("Error: " + text + "\n");
-            case 2 ->
-                log.append(text);
+    public static void cLog(String text, Integer MessageType) {
+        switch (MessageType) {
+            case 0 -> log.append(text + "\n");
+            case 1 -> log.append("Error: " + text + "\n");
+            case 2 -> log.append(text);
         }
         //auto scrolls to the bottom of the log
         scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());

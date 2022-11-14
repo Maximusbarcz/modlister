@@ -35,14 +35,17 @@ public class Modlister {
                     ListModJson.ListJar(jarPath, modListPath.toString());
                 }
             }
+            String modlisttxt = modListPath.toString().replaceAll(".*[/\\\\]", "");
             cLog("] [" + modCount + "]\n", 2);
             cLog("Listing of Mods Complete!", 0);
-            cLog("Modlist.txt has been created to " + modListPath, 0);
+            if (modListFile.exists()) {
+                cLog(modlisttxt + " has been created to " + modListPath, 0);
+            }
             if (temp.exists()) {
                 temp.delete();
             }
             try {
-                cLog("Opening: " + modListPath.toString().replaceAll(".*[/\\\\]", ""), 0);
+                cLog("Opening: " + modlisttxt, 0);
                 Desktop.getDesktop().open(modListFile);
             } catch (IOException e) {
                 cLog("Error opening the file, you can open it manually in your directory.", 1);
