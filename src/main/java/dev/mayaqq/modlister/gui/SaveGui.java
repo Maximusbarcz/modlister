@@ -1,4 +1,4 @@
-package dev.mayaqq.modlister;
+package dev.mayaqq.modlister.gui;
 
 import javax.swing.*;
 import java.io.File;

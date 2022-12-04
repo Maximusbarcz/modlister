@@ -1,4 +1,6 @@
-package dev.mayaqq.modlister;
+package dev.mayaqq.modlister.gui;
+
+import dev.mayaqq.modlister.Modlister;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-class Gui extends JFrame implements ActionListener {
+public class Gui extends JFrame implements ActionListener {
     static JTextField textField;
     static JLabel status;
     static JTextArea log;

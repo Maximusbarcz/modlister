@@ -1,4 +1,4 @@
-package dev.mayaqq.modlister;
+package dev.mayaqq.modlister.files;
 
 import com.google.gson.Gson;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import static dev.mayaqq.modlister.Gui.cLog;
+import static dev.mayaqq.modlister.gui.Gui.cLog;
 
 public class ListModJson {
     public static void ListJar(String jarPath, String modListPath) throws IOException {

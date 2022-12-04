@@ -1,6 +1,8 @@
 package dev.mayaqq.modlister;
 
-import static dev.mayaqq.modlister.Gui.cLog;
+import dev.mayaqq.modlister.gui.Gui;
+
+import static dev.mayaqq.modlister.gui.Gui.cLog;
 
 public class Main {
     public static void main(String[] args) {
