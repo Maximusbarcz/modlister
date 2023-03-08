@@ -41,15 +41,16 @@ public class ListModJson {
                 FileWriter writer = new FileWriter(modList, true);
                 String sources = null;
                 Object contact = map.get("contact");
+                Object modid = map.get("id");
                 if (contact != null) {
                     Map<String, Object> contactMap = (Map<String, Object>) contact;
                     sources = (String) contactMap.get("sources");
                 }
                 String name = (String) map.get("name");
                 if (Objects.equals(sources, "")) {
-                    writer.write(name + " - null\n");
+                    writer.write(name + " - " + modid + " - null\n");
                 } else {
-                    writer.write(name + " - " + sources + "\n");
+                    writer.write(name  + " - " + modid + " - " + sources + "\n");
                 }
                 writer.close();
             }

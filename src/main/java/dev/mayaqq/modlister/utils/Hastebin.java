@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Hastebin {
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     public String post(String text) throws IOException {
-        String url = "https://deftb.in/documents";
+        String url = "https://hst.sh/documents";
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody.create(text, JSON);
         Request request = new Request.Builder()
@@ -14,7 +14,7 @@ public class Hastebin {
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            return "https://deftb.in/" + response.body().string().replaceAll("\"", "").replaceAll("key:", "").replaceAll("\\{", "").replaceAll("}", "");
+            return "https://hst.sh/" + response.body().string().replaceAll("\"", "").replaceAll("key:", "").replaceAll("\\{", "").replaceAll("}", "");
         }
     }
 }
